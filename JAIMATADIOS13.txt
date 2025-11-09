@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, head, i, j, total = 0;
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+    int rq[n];
+    printf("Enter requests: ");
+    for(i=0;i<n;i++) scanf("%d",&rq[i]);
+    printf("Enter head position: ");
+    scanf("%d",&head);
+
+    // Sort
+    for(i=0;i<n-1;i++)
+        for(j=0;j<n-i-1;j++)
+            if(rq[j]>rq[j+1]){ int t=rq[j]; rq[j]=rq[j+1]; rq[j+1]=t; }
+
+    int pos;
+    for(i=0;i<n;i++) if(head<rq[i]) { pos=i; break; }
+
+    printf("Seek Sequence: ");
+    for(i=pos;i<n;i++){ printf("%d ",rq[i]); total+=abs(head-rq[i]); head=rq[i]; }
+    for(i=0;i<pos;i++){ total+=abs(head-rq[i]); head=rq[i]; printf("%d ",rq[i]); }
+
+    printf("\nTotal Seek Time = %d\n",total);
+    printf("Average Seek Time = %.2f\n",(float)total/n);
+    return 0;
+}

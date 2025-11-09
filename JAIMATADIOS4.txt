@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int main() {
+    int n, time = 0, done = 0;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+    int at[n], bt[n], rt[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter Arrival and Burst time of P%d: ", i+1);
+        scanf("%d%d", &at[i], &bt[i]);
+        rt[i] = bt[i];
+    }
+
+    printf("\nGantt Chart: ");
+    while (done < n) {
+        int shortest = -1, min = 9999;
+        for (int i = 0; i < n; i++) {
+            if (at[i] <= time && rt[i] > 0 && rt[i] < min) {
+                min = rt[i];
+                shortest = i;
+            }
+        }
+
+        if (shortest == -1) { // no process yet
+            time++;
+            continue;
+        }
+
+        printf("P%d ", shortest + 1);
+        rt[shortest]--;
+        time++;
+
+        if (rt[shortest] == 0)
+            done++;
+    }
+    printf("\n");
+    return 0;
+}

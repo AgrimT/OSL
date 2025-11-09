@@ -1,0 +1,63 @@
+#!/bin/bash
+
+FILE="aaa.txt"
+
+if [ ! -f $FILE ]; then
+touch $FILE
+fi
+
+while true
+do
+echo ""
+echo "--Address Book--"
+echo "1.View book"
+echo "2.Inser Record"
+echo "3.Delete Record"
+echo "4.Modify Record"
+echo "5.Exit"
+echo "---"
+echo -n "Enter choice"
+read choice
+
+case $choice in
+1)
+echo ""
+echo "--Address Book--"
+if [ -s $FILE ]; then
+cat $FILE
+else
+echo "Empty"
+fi
+;;
+2)
+echo -n "Enter Name:"
+read name
+echo -n "enter phone"
+read phone
+echo "$name : $phone" >> $FILE
+echo "record added"
+;;
+3)
+echo -n "enter deletion name"
+read name
+grep -v "^$name :" $FILE > temp.txt && mv temp.txt $FILE
+echo "Record deleted"
+;;
+4)
+echo -n "enter modification name"
+read name
+grep -v "^$name :" $FILE > temp.txt && mv temp.txt $FILE
+echo -n "Enter new phone"
+read newphone
+echo "$name : $newphone" >> $FILE
+echo "modified"
+;;
+5)
+echo "exiting"
+break
+;;
+*)
+echo "Invalid choice"
+;;
+esac
+done
